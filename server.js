@@ -106,6 +106,7 @@ app.get("/articles/:id", function(req, res) {
 });
 // Create a new note or replace an existing note
 app.post("/articles/:id", function(req, res) {
+    console.log(req.body)
   // Create a new note and pass the req.body to the entry
   var newNote = new Note(req.body);
 
@@ -118,7 +119,7 @@ app.post("/articles/:id", function(req, res) {
     // Otherwise
     else {
       // Use the article id to find and update it's note
-      Article.findOneAndUpdate({},{ $push: { "note": doc._id } }, { new: true },
+      Article.findOneAndUpdate({"_id": req.params.id },{ $push: { "note": doc._id } }, { new: true },
       // Execute the above query
     //   .exec(
           function(err, doc) {
