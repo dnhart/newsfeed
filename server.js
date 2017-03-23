@@ -14,7 +14,8 @@ mongoose.Promise = Promise;
 
 
 // Initialize Express
-var app = express();var PORT = process.env.PORT || 3000;
+var app = express();
+var PORT = process.env.PORT || 3000;
 
 // Use morgan and body parser with our app
 app.use(logger("dev"));
@@ -25,8 +26,20 @@ app.use(bodyParser.urlencoded({
 // Make public a static dir
 app.use(express.static("public"));
 
+
+// Set Handlebars.
+// var exphbs = require("express-handlebars");
+
+// app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+// app.set("view engine", "handlebars");
+
+    // var uristring =
+    // ]mongodb://heroku_v3trs40z:g7evoqhn74bbu71aiqhob6pmg0@ds139630.mlab.com:39360/heroku_v3trs40z ||
+    // process.env.MONGOHQ_URL ||
+    // 'mongodb://localhost/newsfeed';
+
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/newsfeed");
+mongoose.connect("mongodb://heroku_v3trs40z:g7evoqhn74bbu71aiqhob6pmg0@ds139630.mlab.com:39360/heroku_v3trs40z" ||"mongodb://localhost/newsfeed");
 var db = mongoose.connection;
 
 // Show any mongoose errors
@@ -192,5 +205,5 @@ app.delete("/delete/:id", function(req, res) {
 
 // Listen on port 3000
 app.listen(PORT, function() {
-  console.log("App running on port 3000!");
+    console.log("App listening on PORT " + PORT);
 });

@@ -1,4 +1,5 @@
 // Grab the articles as a json
+$.ajax({method:"GET", url:"/scrape"}).done(function(){
 $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
@@ -6,6 +7,7 @@ $.getJSON("/articles", function(data) {
     // Display the apropos information on the page
     $("#articles").append("<p><a href='" + data[i].link + "'>"+data[i].title+"</a><br /><button type='button' class='btn btn-primary btn-xs note' data-id='" + data[i]._id+"'>Comments</button></p><br />");
   }
+});
 });
 
 // Whenever someone clicks a comment button
