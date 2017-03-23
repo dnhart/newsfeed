@@ -33,13 +33,10 @@ app.use(express.static("public"));
 // app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 // app.set("view engine", "handlebars");
 
-    // var uristring =
-    // ]mongodb://heroku_v3trs40z:g7evoqhn74bbu71aiqhob6pmg0@ds139630.mlab.com:39360/heroku_v3trs40z ||
-    // process.env.MONGOHQ_URL ||
-    // 'mongodb://localhost/newsfeed';
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://heroku_v3trs40z:g7evoqhn74bbu71aiqhob6pmg0@ds139630.mlab.com:39360/heroku_v3trs40z" ||"mongodb://localhost/newsfeed");
+// mongoose.connect("mongodb://localhost/newsfeed");
+mongoose.connect("mongodb://heroku_v3trs40z:g7evoqhn74bbu71aiqhob6pmg0@ds139630.mlab.com:39360/heroku_v3trs40z");
 var db = mongoose.connection;
 
 // Show any mongoose errors
