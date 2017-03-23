@@ -36,7 +36,7 @@ app.use(express.static("public"));
 
 // Database configuration with mongoose
 // mongoose.connect("mongodb://localhost/newsfeed");
-mongoose.connect("mongodb://heroku_v3trs40z:g7evoqhn74bbu71aiqhob6pmg0@ds139630.mlab.com:39360/heroku_v3trs40z");
+mongoose.connect("mongodb://heroku_v3trs40z:g7evoqhn74bbu71aiqhob6pmg0@ds139360.mlab.com:39360/heroku_v3trs40z");
 var db = mongoose.connection;
 
 // Show any mongoose errors
