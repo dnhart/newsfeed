@@ -14,7 +14,7 @@ mongoose.Promise = Promise;
 
 
 // Initialize Express
-var app = express();
+var app = express();var PORT = process.env.PORT || 3000;
 
 // Use morgan and body parser with our app
 app.use(logger("dev"));
@@ -137,9 +137,9 @@ app.post("/articles/:id", function(req, res) {
 });
 
 
-// This GET route let's us see the books we have added
+// This GET route let's us see the notes we have added
 app.get("/note", function(req, res) {
-  // Using our Book model, "find" every book in our book db
+  // Using our note model, "find" every note in our article db
   Note.find({}, function(error, doc) {
     // Send any errors to the browser
     if (error) {
@@ -152,12 +152,45 @@ app.get("/note", function(req, res) {
   });
 });
 
+// This GET route let's us see the notes we have added
+app.delete("/delete/:id", function(req, res) {
+  // Using our note model, "find" every note in our article db
+  // res.send(req.body);
 
+  // Create a new note and pass the req.body to the entry
+  // var newNote = new Note(req.body);
+
+  // // And save the new note the db
+  // newNote.save(function(error, doc) {
+  //   // Log any errors
+  //   if (error) {
+  //     console.log(error);
+  //   }
+  //   // Otherwise
+  //   else {()
+  //     // Use the article id to find and update it's note
+      Note.findByIdAndRemove(req.params.id,
+      // Execute the above query
+    //   .exec(
+          function(err, doc) {
+        // Log any errors
+        if (err) {
+          console.log(err);
+        }
+        else {
+          // Or send the document to the browser
+          console.log("return delete");
+          res.send(doc);
+        }
+      });
+  //   }
+  // });
+});
 
 
 
 
 // Listen on port 3000
-app.listen(3000, function() {
+app.listen(PORT, function() {
   console.log("App running on port 3000!");
 });

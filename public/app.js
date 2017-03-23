@@ -2,7 +2,7 @@
 $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
-      console.log(data);
+      // console.log(data);
     // Display the apropos information on the page
     $("#articles").append("<p><a href='" + data[i].link + "'>"+data[i].title+"</a><br /><button type='button' class='btn btn-primary btn-xs note' data-id='" + data[i]._id+"'>Comments</button></p><br />");
   }
@@ -38,7 +38,8 @@ $(document).on("click", ".note", function() {
 
           for(var i=0;i<data.note.length;i++){
               var note = data.note[i];
-          $("#prevNotes").append("<div><strong>"+note.title+":</strong><em>"+" "+note.body+"</em></p>")
+              var noteId=note._id;
+          $("#prevNotes").append("<div id='" + noteId + "'><strong>"+note.title+":</strong><em>"+" "+note.body+" "+"</em><button data-id='" + noteId + "'class='delete'><small>delete</small></button></div>")
           }
         // // Place the title of the note in the title input
         // $("#titleinput").val(data.note.title);
@@ -56,7 +57,7 @@ $(document).on("click", "#savenote", function() {
 console.log(thisId);
 var newTitle = $("#titleinput").val();
 var newBody =$("#bodyinput").val();
-console.log(newTitle);
+// console.log(newTitle);
   // Run a POST request to change the note, using what's entered in the inputs
 if(newTitle && newBody){
   $.ajax({
@@ -72,10 +73,13 @@ if(newTitle && newBody){
     // With that done
     .done(function(data) {
       // Log the response
-      console.log(data.note);
+      var number = data.note.length;
+      number = number -1;
+      console.log(number);
+      var lastId= data.note[number];
 
-      // Empty the notes section
-     $("#prevNotes").append("<div><strong>"+newTitle+":</strong><em>"+" "+newBody+"</em></div>")
+     
+     $("#prevNotes").append("<div id='" + lastId + "'><strong>"+newTitle+":</strong><em>"+" "+newBody+" "+"</em><button data-id='" + lastId + "'class='delete'><small>delete</small></button></div>")
           
     });
 
@@ -85,4 +89,31 @@ if(newTitle && newBody){
 } else {
     alert("Please enter your name or comment.");
 };
+});
+
+
+//delete comment
+$(document).on("click", ".delete", function() {
+  // Grab the id associated with the article from the submit button
+  var thisId = $(this).attr("data-id");
+console.log(thisId);
+
+  // Now make an ajax call for the Article
+  $.ajax({
+    method: "DELETE",
+    url: "/delete/" + thisId
+  })
+    // With that done, add the note information to the page
+    .done(function(data) {
+      var noteId= data._id;
+        console.log(noteId);
+        var divId="#"+noteId;
+    // var removeDiv = div.attr("data-noteId");
+    // console.log(removeDiv);
+    $(divId).remove();
+
+
+
+
+    });
 });
